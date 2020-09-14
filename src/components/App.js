@@ -1,17 +1,28 @@
 import React from "react";
 import HakuKentta from "./HakuKentta";
-import Nasa from "../api/Nasa";
-import KuvaKehys from "../components/KuvaKehys";
+import POD from "./POD";
+import Navi from "./Navi";
+import Home from "./Home";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 class App extends React.Component {
   render() {
     return (
-      <div className="container">
-        <div className="row">
-          <div className="col-md-6">
-            <HakuKentta />
-          </div>
-        </div>
+      <div className="container-lg cool-background">
+        <Router>
+          <Navi />
+          <Switch>
+            <Route path="/Rover">
+              <HakuKentta />
+            </Route>
+            <Route path="/POD">
+              <POD />
+            </Route>
+            <Route path="/">
+              <Home />
+            </Route>
+          </Switch>
+        </Router>
       </div>
     );
   }
