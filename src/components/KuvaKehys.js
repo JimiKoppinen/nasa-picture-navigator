@@ -1,51 +1,59 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import "../additionalStyles.css";
 
-class KuvaKehys extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      vastaus: "",
-    };
+const renderPhotos = (props, photoArray) => {
+  if (!props) {
+    return <div>Ladataan...</div>;
   }
-
-  componentDidMount() {
-    console.log(this.props.vastaus);
-  }
-  componentDidUpdate() {
-    console.log(this.props.vastaus);
-  }
-
-  render() {
-    if (!this.props.vastaus) {
-      return <div>Loading...</div>;
-    } else if (this.props.vastaus.photos.length === 0) {
-      return (
-        <div>
-          Kuvaa ei löytynyt :(
-          <button onClick={() => window.location.reload()}>Takaisin </button>
+  return (
+    <div className="row row-img">
+      {props.map((image, index) => (
+        <div key={index} className="col-md-3 ">
+          <figure className="figure">
+            <img className="img-fluid" src={image.img_src} alt="Card"></img>
+            <figcaption className="figure-caption">
+              Kuva {index + 1} / {photoArray.length}
+            </figcaption>
+          </figure>
         </div>
-      );
-    } else {
-      return (
-        <div className="card">
-          <img
-            className="card-img-top"
-            src={this.props.vastaus.photos[0].img_src}
-            alt="Card"
-          ></img>
-          <div className="card-body">
-            <h5 className="card-title">
-              {this.props.vastaus.photos[0].camera.full_name}
-            </h5>
-            <p className="card-text"></p>
-            <a href="www.google.fi" className="btn btn-primary">
-              Go somewhere
-            </a>
-          </div>
-        </div>
-      );
-    }
+      ))}
+    </div>
+  );
+};
+
+const KuvaKehys = (props) => {
+  const [photosToShow, setPhotosToShow] = useState([]);
+  const [count, setCount] = useState(5);
+
+  const photoArray = props.apiResponse.photos;
+
+  useEffect(() => {
+    const initialArr = photoArray.slice(0, count);
+    setPhotosToShow(initialArr);
+  }, [count, photoArray]);
+
+  const handleClick = () => {
+    setCount(count + 5);
+    const slicedArr = photoArray.slice(0, count);
+    setPhotosToShow(slicedArr);
+  };
+
+  if (photosToShow.length >= 4) {
+    return (
+      <>
+        {renderPhotos(photosToShow, photoArray)}
+        <button onClick={() => handleClick()} className="btn btn-primary mb-2">
+          Lataa lisää...
+        </button>
+      </>
+    );
+  } else if (photosToShow.length < 4 && photosToShow.length > 0) {
+    return renderPhotos(photosToShow, photoArray);
+  } else if (!photosToShow) {
+    return <div>Ei kuvia, valitse toinen kamera tai päivämäärä</div>;
+  } else {
+    return <div>Ei kuvia, valitse toinen kamera tai päivämäärä</div>;
   }
-}
+};
 
 export default KuvaKehys;

@@ -1,27 +1,30 @@
 import React, { useState, useEffect } from "react";
-import Nasa from "../api/Nasa";
+import Nasa, { apikey, baseURL } from "../api/Nasa";
 import KuvaKehys from "./KuvaKehys";
-
-const apikey = "qP22p8oxWj9yQN5Vr0Ga8yna1YCPfgXSn3QxTpW2";
-const baseURL = "https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/";
 
 const HakuKentta = () => {
   const [apiResponse, setApiResponse] = useState(null);
-  const [sol, setSol] = useState(1000);
+  const [date, setDate] = useState("2020-06-11");
+  const [cameraType, setCameraType] = useState("FHAZ");
 
   useEffect(() => {
     getData();
   }, []);
 
   const getData = async () => {
+    setApiResponse(null);
     let response = await Nasa.get(
-      `${baseURL}photos?sol=${sol}&camera=fhaz&api_key=${apikey}`
+      `${baseURL}photos?earth_date=${date}&camera=${cameraType}&api_key=${apikey}`
     );
     setApiResponse(response.data);
   };
 
-  const handleChange = (event) => {
-    setSol(event.target.value);
+  const onChangeDate = (event) => {
+    setDate(event.target.value);
+  };
+
+  const onChangeCameraType = (event) => {
+    setCameraType(event.target.value);
   };
 
   const handleSubmit = (event) => {
@@ -33,34 +36,60 @@ const HakuKentta = () => {
     return <div> Loading...</div>;
   } else {
     return (
-      <div className="col-md-12">
-        <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label>
-              Kameran numero:
+      <>
+        <h1 className="pt-3">Mars Rover -kuvahaku</h1>
+        <p className="lead">
+          Tästä voit tehdä hakuja Nasan tietokannasta valitsemalla päivämärään
+          sekä kameratyypin
+        </p>
+        <div className="row">
+          <div className="col-md-12">
+            <form onSubmit={handleSubmit}>
+              <div className="form-group">
+                <label>Päivämäärä</label>
+
+                <input
+                  className="form-control"
+                  type="date"
+                  value={date}
+                  onChange={onChangeDate}
+                  name="date"
+                />
+              </div>
+
+              <div className="form-group">
+                <label>
+                  Kameran tyyppi
+                  <i
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    title="Valitse neljästä kamerasta sopiva"
+                    className="fa fa-question-circle"
+                  ></i>
+                </label>
+                <select
+                  className="form-control"
+                  onChange={onChangeCameraType}
+                  id="cameraType"
+                  name="cameraType"
+                >
+                  <option value="FHAZ"> Front Hazard Avoidance Camera</option>
+                  <option value="RHAZ">Rear Hazard Avoidance Camera</option>
+                  <option value="MAST">Mast Camera</option>
+                  <option value="NAVCAM">Navigation Camera</option>
+                </select>
+              </div>
               <input
-                type="number"
-                value={sol}
-                onChange={handleChange}
-                name="sol"
+                className="btn btn-primary mb-2"
+                type="Submit"
+                defaultValue="Vaihda"
               />
-            </label>
+            </form>
+            <br />
           </div>
-          <div className="form-group">
-            <label>
-              Numero:
-              {/* <input
-                type="number"
-                value={this.state.numeroValue}
-                onChange={this.handleChange}
-                name="numeroValue"
-              /> */}
-            </label>
-          </div>
-          <input type="submit" value="Submit" />
-        </form>
-        <KuvaKehys vastaus={apiResponse} />
-      </div>
+        </div>
+        <KuvaKehys apiResponse={apiResponse} />
+      </>
     );
   }
 };
