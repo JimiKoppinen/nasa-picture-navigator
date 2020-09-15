@@ -68,6 +68,7 @@ const HakuKentta = () => {
                   onChange={onChangeCameraType}
                   id="cameraType"
                   name="cameraType"
+                  value={cameraType}
                 >
                   <option value="FHAZ"> Front Hazard Avoidance Camera</option>
                   <option value="RHAZ">Rear Hazard Avoidance Camera</option>
@@ -75,11 +76,6 @@ const HakuKentta = () => {
                   <option value="NAVCAM">Navigation Camera</option>
                 </select>
               </div>
-              {/* <input
-                className="btn btn-primary mb-2"
-                type="Submit"
-                defaultValue="Vaihda"
-              /> */}
             </form>
             <br />
           </div>
