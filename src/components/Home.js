@@ -4,7 +4,7 @@ import logo from "../static/123.png";
 const Home = () => {
   return (
     <>
-      <img className="img-fluid" src={logo} alt="Logo" />
+      <img className="w-75 p-3 justify-content-center" src={logo} alt="Logo" />
     </>
   );
 };

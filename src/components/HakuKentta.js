@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import Nasa, { apikey, baseURL } from "../api/Nasa";
+import Nasa, { apikey, baseURLCuriosity } from "../api/Nasa";
 import KuvaKehys from "./KuvaKehys";
+import PacmanLoader from "react-spinners/PacmanLoader";
 
 const HakuKentta = () => {
   const [apiResponse, setApiResponse] = useState(null);
@@ -14,17 +15,19 @@ const HakuKentta = () => {
   const getData = async () => {
     setApiResponse(null);
     let response = await Nasa.get(
-      `${baseURL}photos?earth_date=${date}&camera=${cameraType}&api_key=${apikey}`
+      `${baseURLCuriosity}photos?earth_date=${date}&camera=${cameraType}&api_key=${apikey}`
     );
     setApiResponse(response.data);
   };
 
   const onChangeDate = (event) => {
     setDate(event.target.value);
+    getData();
   };
 
   const onChangeCameraType = (event) => {
     setCameraType(event.target.value);
+    getData();
   };
 
   const handleSubmit = (event) => {
@@ -33,7 +36,7 @@ const HakuKentta = () => {
   };
 
   if (!apiResponse) {
-    return <div> Loading...</div>;
+    return <PacmanLoader />;
   } else {
     return (
       <>
@@ -42,10 +45,11 @@ const HakuKentta = () => {
           Tästä voit tehdä hakuja Nasan tietokannasta valitsemalla päivämärään
           sekä kameratyypin
         </p>
+
         <div className="row">
           <div className="col-md-12">
             <form onSubmit={handleSubmit}>
-              <div className="form-group">
+              <div className="form-group pt-4">
                 <label>Päivämäärä</label>
 
                 <input
@@ -58,15 +62,7 @@ const HakuKentta = () => {
               </div>
 
               <div className="form-group">
-                <label>
-                  Kameran tyyppi
-                  <i
-                    data-toggle="tooltip"
-                    data-placement="top"
-                    title="Valitse neljästä kamerasta sopiva"
-                    className="fa fa-question-circle"
-                  ></i>
-                </label>
+                <label>Kameran tyyppi</label>
                 <select
                   className="form-control"
                   onChange={onChangeCameraType}
@@ -79,11 +75,11 @@ const HakuKentta = () => {
                   <option value="NAVCAM">Navigation Camera</option>
                 </select>
               </div>
-              <input
+              {/* <input
                 className="btn btn-primary mb-2"
                 type="Submit"
                 defaultValue="Vaihda"
-              />
+              /> */}
             </form>
             <br />
           </div>
