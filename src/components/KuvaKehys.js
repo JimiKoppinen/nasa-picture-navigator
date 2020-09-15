@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import "../additionalStyles.css";
+import PacmanLoader from "react-spinners/PacmanLoader";
 
 const renderPhotos = (props, photoArray) => {
   if (!props) {
-    return <div>Ladataan...</div>;
+    return <PacmanLoader />;
   }
   return (
     <div className="row row-img">
