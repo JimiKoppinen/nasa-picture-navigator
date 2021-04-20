@@ -29,22 +29,33 @@ const POD = () => {
   };
 
   if (!apiResponse) {
-    return <PacmanLoader />;
+    return (
+      <div className="d-flex justify-content-center">
+        <PacmanLoader />
+      </div>
+    );
   } else {
     return (
       <div className="row">
-        <div className="col-md-12">
-          <h2 className="pt-3 pb-2">{apiResponse.title}</h2>
+        <div className="column">
+          <h2 style={{ marginBottom: "1rem" }} className="ui header">
+            {apiResponse.title}
+          </h2>
           <img
-            className="mw-100"
+            style={{ marginBottom: "1rem" }}
+            className="ui fluid image"
             src={apiResponse.url}
             alt={apiResponse.title}
           />
-          <div className="lead">
+          <p className="lead">
             {moment(apiResponse.date).format("MMMM Do YYYY")}
-          </div>
-          <div className="pt-3 pb-3">{apiResponse.explanation}</div>
-          <button onClick={handleClick} type="button" className="btn btn-light">
+          </p>
+          <p className="lead">{apiResponse.explanation}</p>
+          <button
+            onClick={handleClick}
+            type="button"
+            className="ui secondary button"
+          >
             Lataa uusi satunnainen kuva
           </button>
         </div>

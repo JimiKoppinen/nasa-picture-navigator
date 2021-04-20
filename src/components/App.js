@@ -5,11 +5,12 @@ import Navi from "./Navi";
 import Home from "./Home";
 import Epic from "./Epic";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { Footer } from "./Footer";
 
 class App extends React.Component {
   render() {
     return (
-      <div className="container-lg cool-background">
+      <div className="ui container cool-background">
         <Router>
           <Navi />
           <Switch>

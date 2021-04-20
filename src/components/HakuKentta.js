@@ -41,45 +41,41 @@ const HakuKentta = () => {
     return (
       <>
         <h1 className="pt-3">Mars Rover -kuvahaku</h1>
-        <p className="lead">
+        <p style={{ fontSize: "15px" }}>
           Tästä voit tehdä hakuja Nasan tietokannasta valitsemalla päivämärään
-          sekä kameratyypin
+          sekä kameratyypin.
         </p>
 
-        <div className="row">
-          <div className="col-md-12">
-            <form onSubmit={handleSubmit}>
-              <div className="form-group pt-4">
-                <label>Päivämäärä</label>
+        <form className="ui form" onSubmit={handleSubmit}>
+          <h4 class="ui dividing header">Haku:</h4>
+          <div className="two fields">
+            <div className="field">
+              <label>Päivämäärä</label>
 
-                <input
-                  className="form-control"
-                  type="date"
-                  value={date}
-                  onChange={onChangeDate}
-                  name="date"
-                />
-              </div>
+              <input
+                type="date"
+                value={date}
+                onChange={onChangeDate}
+                name="date"
+              />
+            </div>
 
-              <div className="form-group">
-                <label>Kameran tyyppi</label>
-                <select
-                  className="form-control"
-                  onChange={onChangeCameraType}
-                  id="cameraType"
-                  name="cameraType"
-                  value={cameraType}
-                >
-                  <option value="FHAZ"> Front Hazard Avoidance Camera</option>
-                  <option value="RHAZ">Rear Hazard Avoidance Camera</option>
-                  <option value="MAST">Mast Camera</option>
-                  <option value="NAVCAM">Navigation Camera</option>
-                </select>
-              </div>
-            </form>
-            <br />
+            <div className="field">
+              <label>Kameran tyyppi</label>
+              <select
+                onChange={onChangeCameraType}
+                id="cameraType"
+                name="cameraType"
+                value={cameraType}
+              >
+                <option value="FHAZ"> Front Hazard Avoidance Camera</option>
+                <option value="RHAZ">Rear Hazard Avoidance Camera</option>
+                <option value="MAST">Mast Camera</option>
+                <option value="NAVCAM">Navigation Camera</option>
+              </select>
+            </div>
           </div>
-        </div>
+        </form>
         <KuvaKehys apiResponse={apiResponse} />
       </>
     );

@@ -7,18 +7,23 @@ const renderPhotos = (props, photoArray) => {
     return <PacmanLoader />;
   }
   return (
-    <div className="row row-img">
-      {props.map((image, index) => (
-        <div key={index} className="col-md-3 ">
-          <figure className="figure">
-            <img className="img-fluid" src={image.img_src} alt="Card"></img>
-            <figcaption className="figure-caption">
-              Kuva {index + 1} / {photoArray.length}
-            </figcaption>
-          </figure>
-        </div>
-      ))}
-    </div>
+    <>
+      <div className="ui grid">
+        {props.map((image, index) => (
+          <div key={index} className="four wide column">
+            <img
+              className="ui fluid image"
+              src={image.img_src}
+              alt="Card"
+            ></img>
+          </div>
+        ))}
+      </div>
+
+      <div className="row">
+        <div className="column">Kuvia yhteensä: {photoArray.length}</div>
+      </div>
+    </>
   );
 };
 
@@ -43,7 +48,7 @@ const KuvaKehys = (props) => {
     return (
       <>
         {renderPhotos(photosToShow, photoArray)}
-        <button onClick={() => handleClick()} className="btn btn-primary mb-2">
+        <button onClick={() => handleClick()} className="ui secondary button">
           Lataa lisää...
         </button>
       </>
