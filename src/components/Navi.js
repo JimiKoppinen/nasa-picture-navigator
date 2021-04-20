@@ -5,15 +5,12 @@ import { Link } from "react-router-dom";
 const Navi = () => {
   return (
     <div className="topnav">
-      <Link to="/" className="active" href="#home">
+      <Link to="/" className="active">
         <i className="fa fa-home"></i>
       </Link>
-      <Link to="/Rover" href="#news">
-        Mars Rover -haku
-      </Link>
-      <Link to="/POD" href="#contact">
-        Päivän kuva
-      </Link>
+      <Link to="/Rover">Mars Rover -haku</Link>
+      <Link to="/POD">Päivän kuva</Link>
+      <Link to="/EPIC">Maan kuvat</Link>
     </div>
   );
 };
