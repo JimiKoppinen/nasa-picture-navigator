@@ -33,7 +33,7 @@ const HakuKentta = () => {
   };
 
   if (!apiResponse) {
-    return <div> Loading...</div>;
+    return <div> Loading....</div>;
   } else {
     return (
       <>
